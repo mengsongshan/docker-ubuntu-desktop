@@ -1,0 +1,15 @@
+FROM ubuntu-desktop:jumper-monkey
+RUN apt update; apt install -y openjdk-17-jdk; apt install zip unzip
+RUN mkdir /opt/software-tools
+RUN wget -P /opt/software-tools https://download-cdn.jetbrains.com/idea/ideaIC-2023.3.5.tar.gz
+RUN wget -P /opt/software-tools https://vscode.download.prss.microsoft.com/dbazure/download/stable/863d2581ecda6849923a2118d93a088b0745d9d6/code-stable-arm64-1709911675.tar.gz
+RUN wget -P /opt/software-tools https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.19.3-stable.tar.xz
+RUN wget -P /opt/software-tools https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.19/bin/apache-tomcat-10.1.19-windows-x64.zip
+
+RUN tar -zxvf /opt/software-tools/ideaIC-2023.3.5.tar.gz -C /opt/software-tools/
+RUN tar -zxvf /opt/software-tools/code-stable-arm64-1709911675.tar.gz -C /opt/software-tools/
+RUN tar xf /opt/software-tools/flutter_linux_3.19.3-stable.tar.xz -C /opt/software-tools/
+RUN unzip -d /opt/software-tools/ /opt/software-tools/apache-tomcat-10.1.19-windows-x64.zip
+
+EXPOSE 9000 9000
+ENTRYPOINT ["/docker_config/entrypoint.sh"]
